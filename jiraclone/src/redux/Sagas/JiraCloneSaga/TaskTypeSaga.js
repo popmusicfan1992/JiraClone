@@ -1,0 +1,22 @@
+import { call, put, takeLatest } from "@redux-saga/core/effects";
+import { taskTypeService, TaskTypeService } from "../../../services/TaskTypeService";
+import { GET_ALL_TASK_TYPE, GET_ALL_TASK_TYPE_SAGA } from "../../constants/JiraClone/JiraCloneConstant";
+
+function* getAllTaskTypeSaga(action) {
+
+    try {
+        const { data, status } = yield call(() => taskTypeService.getAllTaskType());
+
+        yield put({
+            type: GET_ALL_TASK_TYPE,
+            arrTaskType: data.content
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export function* theodoiGetAllTaskTypeSaga() {
+    yield takeLatest(GET_ALL_TASK_TYPE_SAGA, getAllTaskTypeSaga);
+}
